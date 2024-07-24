@@ -4,25 +4,25 @@ pipeline {
     stages {
         stage('Pull Code From GitHub') {
             steps {
-                git 'https://github.com/RokeshN/SaturdayProject.git'
+                git 'https://github.com/manickam24/Julyproject.git'
             }
         }
         stage('Build the Docker image') {
             steps {
-                sh 'sudo docker build -t weekendimage /var/lib/jenkins/workspace/weekendproj'
-                sh 'sudo docker tag weekendimage rokesh3333/myrepo:latest'
-                sh 'sudo docker tag weekendimage rokesh3333/myrepo:${BUILD_NUMBER}'
+                sh 'sudo docker build -t kubeimage /var/lib/jenkins/workspace/manickam'
+                sh 'sudo docker tag kubeimage manickam24/july:latest'
+                sh 'sudo docker tag kubeimage manickam24/july:${BUILD_NUMBER}'
             }
         }
         stage('Push the Docker image') {
             steps {
-                sh 'sudo docker image push rokesh3333/myrepo:latest'
-                sh 'sudo docker image push rokesh3333/myrepo:${BUILD_NUMBER}'
+                sh 'sudo docker image push manickam24/july:latest'
+                sh 'sudo docker image push manickam24/july:${BUILD_NUMBER}'
             }
         }
         stage('Deploy on Kubernetes') {
             steps {
-                sh 'sudo kubectl apply -f /var/lib/jenkins/workspace/weekendproj/pod.yaml'
+                sh 'sudo kubectl apply -f /var/lib/jenkins/workspace/manickam/pod.yaml'
                 sh 'sudo kubectl rollout restart deployment loadbalancer-pod'
             }
         }
